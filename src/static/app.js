@@ -476,8 +476,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Function to generate social sharing URLs
   function generateShareUrls(activityName, description) {
-    const currentUrl = window.location.origin + window.location.pathname;
-    const shareText = `Check out this activity: ${activityName} - ${description}`;
+    const currentUrl = window.location.href;
+    // Truncate description to 100 characters for better sharing experience
+    const truncatedDesc = description.length > 100 ? description.substring(0, 100) + '...' : description;
+    const shareText = `Check out this activity: ${activityName} - ${truncatedDesc}`;
     const encodedText = encodeURIComponent(shareText);
     const encodedUrl = encodeURIComponent(currentUrl);
     
@@ -554,7 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="share-icon">f</span>
         </a>
         <a href="${shareUrls.twitter}" target="_blank" rel="noopener noreferrer" class="share-button twitter" title="Share on Twitter">
-          <span class="share-icon">𝕏</span>
+          <span class="share-icon">X</span>
         </a>
         <a href="${shareUrls.linkedin}" target="_blank" rel="noopener noreferrer" class="share-button linkedin" title="Share on LinkedIn">
           <span class="share-icon">in</span>
