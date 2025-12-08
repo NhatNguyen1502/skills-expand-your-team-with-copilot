@@ -477,8 +477,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to generate social sharing URLs
   function generateShareUrls(activityName, description) {
     const currentUrl = window.location.href;
-    // Truncate description to 100 characters for better sharing experience
-    const truncatedDesc = description.length > 100 ? description.substring(0, 100) + '...' : description;
+    const MAX_SHARE_DESC_LENGTH = 100;
+    // Truncate description to MAX_SHARE_DESC_LENGTH characters for better sharing experience
+    const safeDescription = description || '';
+    const truncatedDesc = safeDescription.length > MAX_SHARE_DESC_LENGTH 
+      ? safeDescription.substring(0, MAX_SHARE_DESC_LENGTH) + '...' 
+      : safeDescription;
     const shareText = `Check out this activity: ${activityName} - ${truncatedDesc}`;
     const encodedText = encodeURIComponent(shareText);
     const encodedUrl = encodeURIComponent(currentUrl);
