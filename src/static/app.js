@@ -474,6 +474,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Function to generate social sharing URLs
+  function generateShareUrls(activityName, description) {
+    const currentUrl = window.location.origin + window.location.pathname;
+    const shareText = `Check out this activity: ${activityName} - ${description}`;
+    const encodedText = encodeURIComponent(shareText);
+    const encodedUrl = encodeURIComponent(currentUrl);
+    
+    return {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+      twitter: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+      email: `mailto:?subject=${encodeURIComponent(activityName)}&body=${encodedText}%0A%0A${encodedUrl}`
+    };
+  }
+
   // Function to render a single activity card
   function renderActivityCard(name, details) {
     const activityCard = document.createElement("div");
@@ -500,6 +515,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Format the schedule using the new helper function
     const formattedSchedule = formatSchedule(details);
+
+    // Generate share URLs
+    const shareUrls = generateShareUrls(name, details.description);
 
     // Create activity tag
     const tagHtml = `
@@ -530,6 +548,21 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="tooltip-text">Regular meetings at this time throughout the semester</span>
       </p>
       ${capacityIndicator}
+      <div class="social-share-buttons">
+        <span class="share-label">Share:</span>
+        <a href="${shareUrls.facebook}" target="_blank" rel="noopener noreferrer" class="share-button facebook" title="Share on Facebook">
+          <span class="share-icon">f</span>
+        </a>
+        <a href="${shareUrls.twitter}" target="_blank" rel="noopener noreferrer" class="share-button twitter" title="Share on Twitter">
+          <span class="share-icon">𝕏</span>
+        </a>
+        <a href="${shareUrls.linkedin}" target="_blank" rel="noopener noreferrer" class="share-button linkedin" title="Share on LinkedIn">
+          <span class="share-icon">in</span>
+        </a>
+        <a href="${shareUrls.email}" class="share-button email" title="Share via Email">
+          <span class="share-icon">✉</span>
+        </a>
+      </div>
       <div class="participants-list">
         <h5>Current Participants:</h5>
         <ul>
